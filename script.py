@@ -14,6 +14,8 @@ def count_functions_usage(filename):
 	f = open(filename, 'r')
 
 	script_file = f.readlines()	#memorizzo tutte le righe nell'array, una riga per elemento
+	f.close()
+	
 	for line in script_file:
 		curr_line = line.strip()
 		m_slash = double_slash.search(curr_line)
@@ -69,7 +71,6 @@ def count_functions_usage(filename):
 			print 'KO - Occorrenze per', fun, ':', fun_counter
 		#else:
 			#print 'OK - Occorrenze per', fun, ':', fun_counter
-	f.close()
 #______________________________
 
 count_functions_usage('js.js')
