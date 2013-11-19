@@ -67,10 +67,10 @@ def count_functions_usage(filename):
 		fnc_counter.append(fun_counter)
 		if fun_counter < 2:
 			print 'KO - Occorrenze per', fun, ':', fun_counter
-		else:
-			print 'OK - Occorrenze per', fun, ':', fun_counter
+		#else:
+			#print 'OK - Occorrenze per', fun, ':', fun_counter
 	f.close()
 #______________________________
 
-count_functions_usage('b.js')
+count_functions_usage('js.js')
 

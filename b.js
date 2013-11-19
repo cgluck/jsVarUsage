@@ -8,7 +8,7 @@ function (y)
 
 function f1()
 {
-	f2();
+	f2 ();
 	return true;
 }
 function f2()
