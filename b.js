@@ -3,7 +3,7 @@ var b=1;
 
 /*ciao */
 function f3 ()
-function (y)
+function(y)
 
 
 function f1()
