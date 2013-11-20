@@ -1,10 +1,11 @@
 import re
 
-fnc = []	#contiene l'elenco delle funzioni
-fnc_counter = []	#conta le occorrenze delle funzioni trovate
-lines = []
+script_file = ''	#variabile globale
 
 def count_functions_usage(filename):
+	fnc = []	#contiene l'elenco delle funzioni
+	fnc_counter = []	#conta le occorrenze delle funzioni trovate
+	lines = []
 	is_cpp_comment = 0
 
 	p = re.compile('function')
@@ -13,6 +14,7 @@ def count_functions_usage(filename):
 	cpp_comment_b = re.compile('[*]/')
 	f = open(filename, 'r')
 
+	global script_file
 	script_file = f.readlines()	#memorizzo tutte le righe nell'array, una riga per elemento
 	f.close()
 	
@@ -73,5 +75,53 @@ def count_functions_usage(filename):
 			#print 'OK - Occorrenze per', fun, ':', fun_counter
 #______________________________
 
-count_functions_usage('js.js')
+count_functions_usage('b.js')
+
+#______________________________
+
+global_vars = []
+local_vars = []
+p = re.compile('function')
+vr = re.compile('var')
+block_end = re.compile('}')
+is_function = 0
+tmp_local_vars = []
+
+#cerco le variabili dichiarate
+for line in script_file:
+	curr_line = line.strip()
+	m_var = vr.search(curr_line)
+	m_function = p.search(curr_line)
+	m_blockend = block_end.search(curr_line)
+	if m_function:
+		is_function = 1
+		del tmp_local_vars[:]	#pulisco la lista
+	if m_blockend:
+		is_function = 0
+		local_vars.append(list(tmp_local_vars))	#aggiungo alla lista la lista delle variabili locali di una funzione
+		#for i in range(0,len(tmp_local_vars)):
+			#local_vars[len(local_vars)-1][i] = tmp_local_vars[i]
+	if m_var:
+		if curr_line[m_var.end()] != ';' and curr_line[m_var.end()] != '\n':
+			tmp_string = ''
+			k = m_var.end()
+			while curr_line[k] == ' ' or curr_line[k] == '\t':
+				k = k + 1
+			while curr_line[k] != ';' and curr_line[k] != ' ' and curr_line[k] != '=':
+				tmp_string = tmp_string + curr_line[k]
+				k = k + 1
+			if len(tmp_string) > 0:
+				if is_function == 0:
+					#ho trovato una variabile globale
+					global_vars.append(tmp_string)
+				else:
+					#variabile locale di una funzione
+					tmp_local_vars.append(tmp_string)
+print 'Global'
+for el in global_vars:
+	print el
+print 'Local'
+for el in local_vars:
+	for el1 in el:
+		print el1
 
