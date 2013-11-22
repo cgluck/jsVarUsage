@@ -184,7 +184,7 @@ def count_variables_usage():
 
 #______________________________
 
-count_functions_usage('js.js')
+count_functions_usage('d.js')
 print '******************'
 count_variables_usage()
 
