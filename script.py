@@ -115,7 +115,8 @@ def count_variables_usage():
 			if(len(parenthesis_stack) == 0):
 				#fine variaibli locali per una certa funzione, copio quelle che ho trovato in un elemento della lista (avro' una lista di liste)
 				is_function = 0
-				local_vars.append(list(tmp_local_vars))	#aggiungo alla lista la lista delle variabili locali di una funzione
+				if len(tmp_local_vars) > 0:
+					local_vars.append(list(tmp_local_vars))	#aggiungo alla lista la lista delle variabili locali di una funzione
 				if local_var_cnt > 0:
 					function_list.append(list(tmp_function_list))
 		if m_var:
@@ -184,7 +185,7 @@ def count_variables_usage():
 
 #______________________________
 
-count_functions_usage('d.js')
+count_functions_usage('js.js')
 print '******************'
 count_variables_usage()
 
